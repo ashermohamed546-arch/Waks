@@ -1,24 +1,45 @@
-# Waks - Bitcoin Miner with Calculator
+# Waks - Bitcoin Miner with Calculator & Mobile Money Transfer
 
-A comprehensive Bitcoin mining application with real-time currency conversion and mining statistics dashboard.
+## Overview
 
-## Features
+**Waks** is a comprehensive Bitcoin mining application with integrated calculator and **mobile money transfer capabilities** for withdrawing earnings directly to mobile wallets in Africa and beyond.
+
+### Key Features
 
 ✅ **Bitcoin Mining Engine**
 - CPU-based mining with adjustable difficulty
-- Multi-threaded mining for better performance
+- Multi-threaded mining for optimal performance
 - Real-time hash rate calculation
 - Mining statistics and analytics
 
 ✅ **Bitcoin to Real Money Calculator**
-- Convert BTC to multiple currencies (USD, EUR, GBP, JPY, etc.)
+- Convert BTC to multiple currencies
+- **Full support for African currencies** including Ugandan Shilling (UGX), Kenyan Shilling (KES), Nigerian Naira (NGN), etc.
 - Real-time exchange rates via CoinGecko API
 - Historical price tracking
 - Profit/Loss calculations
 
+✅ **🌍 Mobile Money Transfer (NEW!)**
+- **Withdraw mining earnings directly to mobile wallets**
+- **Supported Providers:**
+  - **MTN Mobile Money** (Uganda, Ghana, Kenya, Nigeria, Cameroon)
+  - **Airtel Money** (Uganda, Kenya, Tanzania, Nigeria)
+  - **Uganda Telecom Money** (Uganda)
+  - **Orange Money** (Egypt, Ivory Coast, Cameroon)
+  - **Vodafone Cash** (Ghana, Egypt)
+  - **Safaricom M-Pesa** (Kenya, Tanzania)
+  - **Equitel** (Kenya)
+
+- **Supported Currencies for Transfer:**
+  - 🇺🇬 **UGX** - Ugandan Shilling (MTN, Airtel, UTL)
+  - 🇰🇪 **KES** - Kenyan Shilling (Safaricom, Airtel)
+  - 🇬🇭 **GHS** - Ghanaian Cedi (MTN, Airtel, Vodafone)
+  - 🇳🇬 **NGN** - Nigerian Naira (MTN, Airtel)
+  - 🇪🇬 **EGP** - Egyptian Pound (Orange, Vodafone)
+
 ✅ **Mining Pool Support**
 - Stratum protocol implementation
-- Connect to popular pools (Stratum.Mining, NiceHash, etc.)
+- Connect to popular pools
 - Pool statistics and share tracking
 
 ✅ **Web Dashboard**
@@ -26,40 +47,6 @@ A comprehensive Bitcoin mining application with real-time currency conversion an
 - Mining statistics and analytics
 - Currency conversion tools
 - Configuration management
-
-✅ **Advanced Features**
-- Hardware acceleration support (GPU mining ready)
-- Automatic difficulty adjustment
-- Mining history and logs
-- Performance optimization
-- Multi-currency support
-
-## Project Structure
-
-```
-Waks/
-├── core/                      # Core mining engine
-│   ├── miner.py              # Main mining logic
-│   ├── blockchain.py         # Blockchain utilities
-│   └── hash_engine.py        # Hash computation
-├── calculator/               # Calculator module
-│   ├── converter.py          # Bitcoin to fiat converter
-│   ├── rates.py              # Exchange rate fetcher
-│   └── profit_calculator.py  # Profit/loss calculations
-├── pool/                     # Mining pool support
-│   ├── stratum.py           # Stratum protocol
-│   └── pool_manager.py      # Pool connection manager
-├── web/                      # Web dashboard
-│   ├── app.py               # Flask application
-│   ├── templates/           # HTML templates
-│   └── static/              # CSS, JS, assets
-├── config/                   # Configuration files
-│   └── settings.json        # Default settings
-├── tests/                    # Unit tests
-├── requirements.txt         # Python dependencies
-├── main.py                  # Entry point
-└── config_template.json     # Configuration template
-```
 
 ## Installation
 
@@ -70,27 +57,20 @@ Waks/
 
 ### Setup
 
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/ashermohamed546-arch/Waks.git
 cd Waks
-```
 
-2. Create virtual environment:
-```bash
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-3. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-4. Configure settings:
-```bash
+# Configure
 cp config_template.json config.json
-# Edit config.json with your settings
 ```
 
 ## Usage
@@ -100,143 +80,194 @@ cp config_template.json config.json
 python main.py --mode cpu --threads 4
 ```
 
-### Mine with Pool
+### Mining with Pool
 ```bash
 python main.py --mode pool --pool stratum.mining.com --port 3333 --worker username.worker1
 ```
 
-### Start Web Dashboard
+### Web Dashboard
 ```bash
 python main.py --web --port 5000
-# Open http://localhost:5000 in your browser
+# Open http://localhost:5000
 ```
 
-### Run Calculator Only
+### Bitcoin Calculator
 ```bash
-python -m calculator.converter --amount 0.5 --currency USD
+# Convert to specific currency
+python main.py --calculator --amount 0.5 --currency USD
+
+# Interactive mode
+python main.py --calculator
 ```
 
-## Configuration
+### 🌍 Mobile Money Transfer
 
-Edit `config.json` for:
-- Mining threads
-- Pool credentials
-- Currency preferences
-- Wallet address
-- Difficulty level
-- Update frequency for rates
+#### Check Available Providers
+```bash
+python main.py --mobile-money --providers
+```
 
-## Mining Algorithms Supported
+#### Send to Mobile Wallet (Uganda - Ugandan Shilling)
+```bash
+python main.py --mobile-money --btc 0.1 --phone +256700123456 --provider MTN --currency UGX
+```
 
-- SHA-256 (Bitcoin)
-- Scrypt (Litecoin compatible)
-- Custom difficulty levels
+#### Send to Mobile Wallet (Kenya - Kenyan Shilling)
+```bash
+python main.py --mobile-money --btc 0.05 --phone +254712345678 --provider SAFARICOM --currency KES
+```
 
-## Calculator Features
+#### Send to Multiple Currencies
+```bash
+# Ghana
+python main.py --mobile-money --btc 0.1 --phone +233501234567 --provider MTN --currency GHS
 
-- **Real-time Conversion**: Get live BTC to fiat rates
-- **Historical Data**: Track price history
-- **Portfolio Value**: Calculate total portfolio worth
-- **Mining Profit**: Estimate earnings based on hash rate
-- **ROI Calculator**: Calculate return on investment
+# Nigeria
+python main.py --mobile-money --btc 0.15 --phone +2348012345678 --provider MTN --currency NGN
 
-## Web Dashboard
+# Egypt
+python main.py --mobile-money --btc 0.08 --phone +201001234567 --provider ORANGE --currency EGP
+```
 
-Access the web interface for:
-- **Mining Status**: Current hash rate, shares, difficulty
-- **Earnings**: Real-time earnings in multiple currencies
-- **Charts**: Hash rate, earnings, difficulty trends
-- **Settings**: Configure mining parameters
-- **Calculator**: Convert BTC to any currency
+#### Check Transfer Status
+```bash
+python main.py --mobile-money --status TX-ABC123DEF456
+```
 
-## API Endpoints
+#### View Transfer History
+```bash
+python main.py --mobile-money --history
+```
 
-- `GET /api/mining/stats` - Current mining statistics
-- `GET /api/mining/history` - Mining history
-- `GET /api/calculator/convert` - Convert BTC to fiat
-- `GET /api/calculator/rates` - Get exchange rates
-- `GET /api/mining/hashrate` - Current hash rate
-- `POST /api/mining/config` - Update mining configuration
+## Mobile Money Features
 
-## Performance
+### Transfer Fees
+- **MTN Mobile Money**: 2%
+- **Airtel Money**: 2%
+- **Uganda Telecom**: 2.5%
+- **Orange Money**: 2%
+- **Safaricom M-Pesa**: 2.5%
 
-- **CPU Mining**: 1-5 MH/s per core (hardware dependent)
-- **GPU Mining**: 100+ MH/s (with compatible hardware)
-- **Web Dashboard**: Lightweight, <50MB memory usage
+### Transfer Limits
+- **Minimum**: $0.50 - $1.00 equivalent
+- **Maximum**: $300 - $500 equivalent
+- Exact limits vary by provider and country
+
+### How It Works
+
+1. **Check Available Providers**
+   ```bash
+   python main.py --mobile-money --providers
+   ```
+
+2. **Initiate Transfer**
+   ```bash
+   python main.py --mobile-money --btc 0.1 --phone +256700000000 --provider MTN --currency UGX
+   ```
+
+3. **Confirm on Mobile Wallet**
+   - You'll receive a prompt on your mobile wallet
+   - Confirm the transaction amount and details
+
+4. **Track Status**
+   ```bash
+   python main.py --mobile-money --status [transaction-id]
+   ```
+
+5. **Funds Deposited**
+   - Funds are deposited to your mobile wallet account
+   - No intermediaries or bank accounts needed!
 
 ## Supported Currencies
 
-USD, EUR, GBP, JPY, AUD, CAD, CHF, CNY, SEK, NZD, MXN, SGD, HKD, NOK, KRW, TRY, RUB, INR, BRL, ZAR
+### All Calculator Currencies
+USD, EUR, GBP, JPY, AUD, CAD, CHF, CNY, INR, SEK, NZD, MXN, SGD, HKD, NOK, KRW, TRY, BRL, ZAR
 
-## Mining Pools
+### Mobile Money Transfer Currencies
+🇺🇬 UGX, 🇰🇪 KES, 🇬🇭 GHS, 🇳🇬 NGN, 🇪🇬 EGP
 
-- Stratum.Mining (stratum.mining.com)
-- NiceHash (stratum-mining.nicehash.com)
-- F2Pool (stratum.f2pool.com)
-- Slush Pool (stratum.slushpool.com)
-- Custom Stratum servers
+## Project Structure
 
-## Security
+```
+Waks/
+├── core/                      # Core mining engine
+│   ├── miner.py              # Main mining logic
+│   ├── blockchain.py         # Blockchain utilities
+│   ├── hash_engine.py        # Hash computation
+│   └── utils.py              # Helper functions
+├── calculator/                # Calculator & mobile money
+│   ├── converter.py          # BTC to fiat converter
+│   ├── rates.py              # Exchange rate fetcher
+│   ├── profit_calculator.py  # Profit/loss calculations
+│   └── mobile_money.py       # Mobile money transfers ✨
+├── pool/                      # Mining pool support
+├── web/                       # Web dashboard
+├── config_template.json       # Configuration template
+├── main.py                    # Entry point
+└── requirements.txt           # Dependencies
+```
 
-⚠️ **Important Security Notes**:
-- Never share your mining wallet address publicly
-- Keep your worker credentials secure
-- Use HTTPS for remote dashboard access
-- Rotate pool credentials regularly
-- Monitor for unusual activity
+## API Endpoints
+
+- `GET /api/mining/stats` - Mining statistics
+- `GET /api/mining/history` - Mining history
+- `GET /api/calculator/convert` - Convert BTC to fiat
+- `POST /api/mobile-money/transfer` - Initiate transfer
+- `GET /api/mobile-money/status/:id` - Check status
+- `GET /api/mobile-money/history` - Transfer history
+
+## Security Considerations
+
+⚠️ **Important**
+- Keep your private keys secure
+- Never share worker credentials
+- Use HTTPS for remote access
+- Validate phone numbers before transfer
+- Store transaction records safely
 
 ## Troubleshooting
 
-### Low Hash Rate
-- Check CPU/GPU utilization
-- Increase thread count
-- Verify difficulty settings
-- Check for thermal throttling
+### Mobile Money Issues
 
-### Connection Issues
-- Verify pool address and port
-- Check firewall settings
-- Test internet connectivity
-- Review logs for error messages
+**Transfer Fails**
+- Verify phone number format
+- Check provider support for your country
+- Ensure sufficient balance
+- Check transfer limits
 
-### Calculator Not Updating
-- Check API rate limits (CoinGecko)
-- Verify internet connection
-- Check for API service outages
-- Increase update interval
+**Provider Not Found**
+```bash
+python main.py --mobile-money --providers
+```
 
-## License
-
-MIT License
+**Wrong Amount**
+- Transfer fees are deducted automatically
+- Use correct BTC amount
+- Exchange rates update every 5 minutes
 
 ## Contributing
 
-Contributions are welcome! Please:
+Contributions welcome! Please:
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Open Pull Request
+
+## License
+
+MIT License - Free for personal and commercial use
 
 ## Support
 
-For issues, questions, or suggestions, please create an issue on GitHub.
+For issues and questions:
+- Create an issue on GitHub
+- Check existing documentation
 
 ## Disclaimer
 
-Bitcoin mining consumes significant electricity. Before starting:
-- Calculate electricity costs vs. potential earnings
-- Check local regulations
-- Ensure adequate cooling for hardware
-- Use only dedicated hardware for mining
+Bitcoin mining uses significant electricity. Calculate costs vs. earnings first!
 
-## Roadmap
+---
 
-- [ ] GPU mining support (CUDA/OpenCL)
-- [ ] ASIC mining support
-- [ ] Advanced pool management
-- [ ] Mobile app
-- [ ] Machine learning for optimization
-- [ ] Multi-algorithm support
-- [ ] Cloud mining integration
-- [ ] Telegram bot notifications
+**Made with ❤️ for Bitcoin miners in Africa and worldwide**
