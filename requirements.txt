@@ -5,14 +5,13 @@ Flask-CORS==4.0.0
 gunicorn==21.2.0
 
 # Cryptography & Hashing
-hashlib-extended==1.0.0
 cryptography==41.0.7
 pycryptodome==3.19.0
 
 # API & HTTP
 requests==2.31.0
 aiohttp==3.9.1
-urlllib3==2.1.0
+urllib3==2.1.0
 
 # Data Processing
 numpy==1.26.3
