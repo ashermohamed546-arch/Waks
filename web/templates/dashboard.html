@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Waks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="bi bi-lightning-charge"></i> Waks</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/calculator">Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/mobile-money">Mobile Money</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <h2 class="mb-4">Mining Dashboard</h2>
+        
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Hashrate</div>
+                    <div class="stat-value" id="hashrate">0 H/s</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Blocks Found</div>
+                    <div class="stat-value" id="blocks">0</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">BTC Earned</div>
+                    <div class="stat-value" id="btc-earned">0 BTC</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-label">Status</div>
+                    <div class="stat-value" id="status" style="font-size: 16px; color: #28a745;">Running</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Mining Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="stats-content">Loading...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Stats</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <small class="text-muted">Total Hashes:</small>
+                            <div id="total-hashes">0</div>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted">Shares Accepted:</small>
+                            <div id="shares-accepted">0</div>
+                        </div>
+                        <div>
+                            <small class="text-muted">Uptime:</small>
+                            <div id="uptime">0h 0m 0s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fetch mining stats
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/mining/stats');
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    const stats = data.data;
+                    document.getElementById('hashrate').textContent = stats.hashrate;
+                    document.getElementById('blocks').textContent = stats.blocks;
+                    document.getElementById('btc-earned').textContent = stats.btc_earned + ' BTC';
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+        
+        updateStats();
+        setInterval(updateStats, 5000);  // Update every 5 seconds
+    </script>
+</body>
+</html>
