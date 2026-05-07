@@ -1,0 +1,32 @@
+{
+  "name": "Waks - Bitcoin Miner",
+  "description": "Bitcoin mining application with calculator and mobile money transfer",
+  "repository": "https://github.com/ashermohamed546-arch/Waks",
+  "keywords": ["bitcoin", "mining", "calculator", "mobile-money"],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "Flask secret key",
+      "generator": "secret"
+    },
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    },
+    "FLASK_DEBUG": {
+      "description": "Flask debug mode",
+      "value": "False"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  },
+  "addons": []
+}
